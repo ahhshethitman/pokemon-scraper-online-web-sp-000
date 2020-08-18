@@ -28,6 +28,8 @@ class Pokemon
     #SQL
     #pokemon = db.execute(sql, [id]).flatten
     name = pokemon[1]
+    type = pokemon[2]
+    hp = pokemon[3]
     
     
     pokemon_inst = Pokemon.new(id, pokemon[1], pokemon[2], pokemon[3], db )
