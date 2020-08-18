@@ -15,6 +15,9 @@ class Pokemon
   end
 
   def self.find(id, database_connection)
+     sql = <<-SQL
+      SELECT * FROM pokemon WHERE id = (?);
+    SQL
     pokemon = database_connection.execute("SELECT * FROM pokemon WHERE id = ?", id).flatten
     name = pokemon[1]
     type = pokemon[2]
