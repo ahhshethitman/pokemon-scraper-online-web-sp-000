@@ -1,13 +1,11 @@
 class Pokemon
-  attr_reader :id, :name, :type, :hp, :db
-  @@all = []
+  attr_accessor :name, :type, :id, :db, 
 
-  def initialize (id:, name:, type:, db:)
+  def initialize (id, name, type, db)
     @id = id
     @name = name
     @type = type
     @db = db
-    @@all << self
   end
 
   def self.save(name, type, db)
@@ -19,18 +17,12 @@ class Pokemon
     
   end
 
-  def self.find(id, database_connection)
-     sql = <<-SQL
+  def self.find(id, db)
+    sql = <<-SQL
       SELECT * FROM pokemon WHERE id = (?);
     SQL
-    pokemon = database_connection.execute("SELECT * FROM pokemon WHERE id = ?", id).flatten
-    name = pokemon[1]
-    type = pokemon[2]
-   
-
-    pokemon_inst = Pokemon.new(id: id, name: name, type: type, db: database_connection)
+    pokemon = db.execute(sql, [id]).flatten
+    Pokemon.new(id, pokemon[1], pokemon[2], pokemon[3], db )
   end
 
-  
-
-end	
+end
